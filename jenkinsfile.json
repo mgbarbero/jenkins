@@ -1,0 +1,12 @@
+node('maven') {
+  stage 'build bbvaatmbackend'
+    openshiftBuild(buildConfig: 'bbvaatmbackend', showBuildLogs: 'true')
+  stage 'deploy bbvaatmbackend'
+    openshiftDeploy(deploymentConfig: 'bbvaatmbackend')
+  stage 'build bbvamap'
+    openshiftBuild(buildConfig: 'bbvamap', showBuildLogs: 'true')
+ stage 'confirmar deploy mapas' 
+    input message: "Desplegar Mapas ?", ok: "Confirmar"
+  stage 'deploy bbvamap' 
+    openshiftDeploy(deploymentConfig: 'bbvamap')
+}
