@@ -3,9 +3,9 @@
     "kind": "BuildConfig",
     "metadata": {
         "labels": {
-            "name": "bbvaatmbackend-pipeline"
+            "name": "bbva-pipeline"
         },
-        "name": "bbvaatmbackend-pipeline"
+        "name": "bbva-pipeline"
     },
     "spec": {
         "strategy": {
