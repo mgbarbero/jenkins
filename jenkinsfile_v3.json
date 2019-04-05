@@ -1,28 +1,28 @@
 node('maven') {
-  stage 'build bbvaatmbackend'
+  stage 'build bbvaatmbackend dev'
     openshiftBuild(buildConfig: 'bbvaatmbackend', showBuildLogs: 'true')
-  stage 'deploy bbvaatmbackend'
+  stage 'deploy bbvaatmbackend dev'
     openshiftDeploy(deploymentConfig: 'bbvaatmbackend')
-  stage 'build bbvamap'
+  stage 'build bbvamap dev'
     openshiftBuild(buildConfig: 'bbvamap', showBuildLogs: 'true')
-  stage 'confirmar deploy mapas en dev' 
+  stage 'confirmar deploy bbvamap en dev' 
     input message: "Desplegar Mapas en Dev ?", ok: "Confirmar"
-  stage 'deploy bbvamap' 
+  stage 'deploy bbvamap dev' 
     openshiftDeploy(deploymentConfig: 'bbvamap')
   stage 'realizar deploy app java en dev ?' 
-    input message: "Desplegar app java en Dev ?", ok: "Confirmar"
-  stage 'build bbvajava'
+    input message: "Desplegar app java en dev ?", ok: "Confirmar"
+  stage 'build bbvajava dev'
     openshiftBuild(buildConfig: 'bbvajava', showBuildLogs: 'true')
-  stage 'deploy bbvajava' 
+  stage 'deploy bbvajava dev' 
     openshiftDeploy(deploymentConfig: 'bbvajava')
   stage 'realizar deploy maps y backend en test ?' 
     input message: "Desplegar maps y backend en test ?", ok: "Confirmar"
-  stage 'Promuevo a test bbvamap'
+  stage 'promuevo bbvamap a test'
     openshiftTag(sourceStream: 'bbvamap', sourceTag: 'latest',destinationStream: 'bbvamap', destinationTag: 'test')
-  stage 'Promuevo a test bbvaatmbackend'
+  stage 'promuevo bbvaatmbackend a test'
     openshiftTag(sourceStream: 'bbvaatmbackend', sourceTag: 'latest',destinationStream: 'bbvaatmbackend', destinationTag: 'test')
-  stage 'deploy bbvaatmbackend en test'
+  stage 'deploy bbvaatmbackend test'
     openshiftDeploy(deploymentConfig: 'bbvaatmbackend', namespace:'bbvatest') 
-  stage 'deploy bbvamap en test' 
+  stage 'deploy bbvamap test' 
     openshiftDeploy(deploymentConfig: 'bbvamap', namespace:'bbvatest')
 }
