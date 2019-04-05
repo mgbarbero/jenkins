@@ -1,0 +1,6 @@
+node('maven') {
+  stage 'Promuevo a test bbvamap'
+    openshiftTag(sourceStream: 'bbvamap', sourceTag: 'latest',destinationStream: 'bbvamap', destinationTag: 'test')
+  stage 'Promuevo a test bbvaatmbackend'
+    openshiftTag(sourceStream: 'bbvaatmbackend', sourceTag: 'latest',destinationStream: 'bbvaatmbackend', destinationTag: 'test')
+    }
