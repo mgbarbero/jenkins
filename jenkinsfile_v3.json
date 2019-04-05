@@ -22,7 +22,7 @@ node('maven') {
   stage 'Promuevo a test bbvaatmbackend'
     openshiftTag(sourceStream: 'bbvaatmbackend', sourceTag: 'latest',destinationStream: 'bbvaatmbackend', destinationTag: 'test')
   stage 'deploy bbvaatmbackend en test'
-    openshiftDeploy(deploymentConfig: 'bbvaatmbackend' namespace:'bbvatest') 
+    openshiftDeploy(deploymentConfig: 'bbvaatmbackend', namespace:'bbvatest') 
   stage 'deploy bbvamap en test' 
-    openshiftDeploy(deploymentConfig: 'bbvamap' namespace:'bbvatest')
+    openshiftDeploy(deploymentConfig: 'bbvamap', namespace:'bbvatest')
 }
