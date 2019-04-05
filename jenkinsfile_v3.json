@@ -1,0 +1,22 @@
+node('maven') {
+  stage 'promote to test bbvamap'
+    openshiftTag(sourceStream: 'bbvamap', sourceTag: 'latest',destinationStream: 'bbvamap', destinationTag: 'test')
+  stage 'promote to test bbvaatmbackend'
+    openshiftTag(sourceStream: 'bbvaatmbackend', sourceTag: 'latest',destinationStream: 'bbvaatmbackend', destinationTag: 'test')
+  stage 'build bbvaatmbackend'
+    openshiftBuild(buildConfig: 'bbvaatmbackend', showBuildLogs: 'true')
+  stage 'deploy bbvaatmbackend'
+    openshiftDeploy(deploymentConfig: 'bbvaatmbackend')
+  stage 'build bbvamap'
+    openshiftBuild(buildConfig: 'bbvamap', showBuildLogs: 'true')
+  stage 'confirmar deploy mapas' 
+    input message: "Desplegar Mapas ?", ok: "Confirmar"
+  stage 'deploy bbvamap' 
+    openshiftDeploy(deploymentConfig: 'bbvamap')
+  stage 'realizar deploy app java ?' 
+    input message: "Desplegar app java ?", ok: "Confirmar"
+  stage 'build bbvajava'
+    openshiftBuild(buildConfig: 'bbvajava', showBuildLogs: 'true')
+  stage 'deploy bbvajava' 
+    openshiftDeploy(deploymentConfig: 'bbvajava')
+}
