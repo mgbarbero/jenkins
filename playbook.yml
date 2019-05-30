@@ -1,5 +1,3 @@
-[curtis@vm1 ~]$ ansible vm2 -m setup
-
 —-
 - hosts: webservers
  become: yes
