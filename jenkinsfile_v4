@@ -1,0 +1,8 @@
+node('maven') {
+  stage 'build microservicio'
+    openshiftBuild(buildConfig: 'springboot', showBuildLogs: 'true')
+ stage 'confirmar deploy microservicio' 
+    input message: "Desplegar microservicio ?", ok: "Confirmar"
+  stage 'deploy microservicio' 
+    openshiftDeploy(deploymentConfig: 'springboot')
+}
