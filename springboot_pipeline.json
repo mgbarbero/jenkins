@@ -1,0 +1,33 @@
+try {
+             timeout(time: 20, unit: 'MINUTES') {
+                node('maven') {
+                    stage('build') {
+                      openshift.withCluster() {
+                         openshift.withProject() {
+                            def bld = openshift.startBuild('bbvajava')
+                            bld.untilEach {
+                              return it.object().status.phase == "Running"
+                            }
+                            bld.logs('-f')
+                         }  
+                      }
+                    }
+                    stage("aprobar") {
+                        input message: "Aprobar publicación microservicio", id: "approval"
+                      }
+                    stage('deploy') {
+                      openshift.withCluster() {
+                        openshift.withProject() {
+                          def dc = openshift.selector('dc', 'bbvajava')
+                          dc.rollout().latest()
+                        }
+                      }
+                    }
+                  }
+             }
+          } catch (err) {
+             echo "in catch block"
+             echo "Caught: ${err}"
+             currentBuild.result = 'FAILURE'
+             throw err
+          }    
