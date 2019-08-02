@@ -1,16 +1,16 @@
 {
-    "apiVersion": "v1",
+    "apiVersion": "build.openshift.io/v1",
     "kind": "BuildConfig",
     "metadata": {
         "labels": {
-            "name": "bbva-pipeline"
+            "name": "redlink-pipeline"
         },
-        "name": "bbva-pipeline"
+        "name": "redlink-pipeline"
     },
     "spec": {
         "strategy": {
             "jenkinsPipelineStrategy": {
-                "jenkinsfile": "node('maven') {\n  stage 'build'\n    openshiftBuild(buildConfig: 'bbvaatmbackend', showBuildLogs: 'true')\n  stage 'deploy'\n    openshiftDeploy(deploymentConfig: 'bbvaatmbackend')\n}"
+                "jenkinsfile": "node('maven') {\n  stage 'build'\n    openshiftBuild(buildConfig: 'redlinkatmbackend', showBuildLogs: 'true')\n  stage 'deploy'\n    openshiftDeploy(deploymentConfig: 'redlinkatmbackend')\n}"
             },
             "type": "JenkinsPipeline"
         },
